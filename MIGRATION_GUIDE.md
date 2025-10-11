@@ -85,7 +85,7 @@ def get_senders():
 from tt import DB, Config
 
 config = Config('config.yaml')
-db = DB(config.db_name, config.db_password)
+db = DB(config.get('database.name'), config.get('database.password'))
 
 def get_senders():
     with db:
@@ -137,8 +137,8 @@ class Sender(TGClient):
         self.id = id
         super().__init__(
             session_name="sessions/" + str(id),
-            api_id=config.api_id,
-            api_hash=config.api_hash,
+            api_id=config.get('telegram.api_id'),
+            api_hash=config.get('telegram.api_hash'),
             proxy=config.proxy
         )
 ```
@@ -350,7 +350,7 @@ if __name__ == '__main__':
 from tt import DB, Config
 
 config = Config('config.yaml')
-db = DB(config.db_name, config.db_password)
+db = DB(config.get('database.name'), config.get('database.password'))
 
 def get_senders():
     with db:
@@ -384,10 +384,10 @@ LISTENER_LOGIN_MSG = "正在登录中, 如果您提供的内容正确, 账号将
 
 bot = TelegramClient(
     "sessions/bot",
-    config.api_id,
-    config.api_hash,
+    config.get('telegram.api_id'),
+    config.get('telegram.api_hash'),
     proxy=config.proxy
-).start(bot_token=config.bot_token)
+).start(bot_token=config.get('bot.token'))
 
 async def start_bot():
     # ... 保持不变
@@ -399,8 +399,8 @@ class Sender(TGClient):
         self.tid = 0
         super().__init__(
             session_name="sessions/" + str(id),
-            api_id=config.api_id,
-            api_hash=config.api_hash,
+            api_id=config.get('telegram.api_id'),
+            api_hash=config.get('telegram.api_hash'),
             proxy=config.proxy
         )
     

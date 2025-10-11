@@ -63,9 +63,9 @@ telegram:
         
         # 测试配置加载
         config = Config(temp_file)
-        assert config.db_name == 'test_db'
-        assert config.db_password == 'test_pwd'
-        assert config.api_id == 12345
+        assert config.get('database.name') == 'test_db'
+        assert config.get('database.password') == 'test_pwd'
+        assert config.get('telegram.api_id') == 12345
         
         # 清理
         os.unlink(temp_file)

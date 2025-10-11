@@ -66,7 +66,7 @@ bot:
 from tt import DB, Config
 
 config = Config('config.yaml')
-db = DB(config.db_name, config.db_password)
+db = DB(config.get('database.name'), config.get('database.password'))
 
 # 使用上下文管理器（推荐）
 with db:
@@ -91,8 +91,8 @@ from tt import TGClient, Config
 config = Config('config.yaml')
 client = TGClient(
     session_name='my_session',
-    api_id=config.api_id,
-    api_hash=config.api_hash,
+    api_id=config.get('telegram.api_id'),
+    api_hash=config.get('telegram.api_hash'),
     proxy=config.proxy
 )
 
@@ -187,18 +187,18 @@ async def startup():
     info("启动 Telegram 客户端")
     
     # 创建数据库实例
-    db = DB(app.config.db_name, app.config.db_password)
+    db = DB(app.config.get('database.name'), app.config.get('database.password'))
     
     # 创建 Telegram 客户端
     client = TGClient(
         session_name='my_bot',
-        api_id=app.config.api_id,
-        api_hash=app.config.api_hash,
+        api_id=app.config.get('telegram.api_id'),
+        api_hash=app.config.get('telegram.api_hash'),
         proxy=app.config.proxy
     )
     
     # 启动客户端
-    await client.start(bot_token=app.config.bot_token)
+    await client.start(bot_token=app.config.get('bot.token'))
     
     # 发送消息
     await client.send_message('username', 'Bot 已启动！')
@@ -255,7 +255,7 @@ Telegram 客户端封装类。
 
 **方法：**
 
-- `get(key, default)`: 获取配置项
+- `get(key, default)`: 获取配置项，支持点号分隔的嵌套键（如 'database.name'）
 - `set(key, value)`: 设置配置项
 - `load(config_path)`: 加载配置文件
 - `save(config_path)`: 保存配置文件
@@ -263,17 +263,23 @@ Telegram 客户端封装类。
 
 **属性：**
 
-- `proxy`: 代理配置
-- `db_name`: 数据库名称
-- `db_password`: 数据库密码
-- `db_host`: 数据库主机
-- `db_port`: 数据库端口
-- `db_user`: 数据库用户
-- `api_id`: Telegram API ID
-- `api_hash`: Telegram API Hash
-- `bot_id`: 机器人 ID
-- `bot_username`: 机器人用户名
-- `bot_token`: 机器人 Token
+- `proxy`: 代理配置（特殊处理，返回代理元组）
+
+**配置获取示例：**
+
+```python
+config = Config('config.yaml')
+
+# 使用 get() 方法获取配置
+db_name = config.get('database.name')
+db_password = config.get('database.password')
+api_id = config.get('telegram.api_id')
+api_hash = config.get('telegram.api_hash')
+bot_token = config.get('bot.token')
+
+# proxy 使用属性获取（返回特殊格式的元组）
+proxy = config.proxy
+```
 
 ### TelegramApp 类
 

@@ -21,7 +21,7 @@ def example_with_app():
         info("应用启动中...")
         
         # 创建数据库实例
-        db = DB(app.config.db_name, app.config.db_password)
+        db = DB(app.config.get('database.name'), app.config.get('database.password'))
         
         # 使用数据库
         with db:
@@ -31,18 +31,18 @@ def example_with_app():
         # 创建 Telegram 客户端
         client = TGClient(
             session_name='sessions/my_bot',
-            api_id=app.config.api_id,
-            api_hash=app.config.api_hash,
+            api_id=app.config.get('telegram.api_id'),
+            api_hash=app.config.get('telegram.api_hash'),
             proxy=app.config.proxy
         )
         
         # 启动客户端（Bot 模式）
-        await client.start(bot_token=app.config.bot_token)
+        await client.start(bot_token=app.config.get('bot.token'))
         info("Telegram 客户端已启动")
         
         # 发送消息
         try:
-            await client.send_message(app.config.bot_username, 'Bot 已启动！')
+            await client.send_message(app.config.get('bot.username'), 'Bot 已启动！')
         except Exception as e:
             err(f"发送消息失败: {e}")
         
@@ -69,7 +69,7 @@ async def example_direct():
     config = Config('config.yaml')
     
     # 使用数据库
-    db = DB(config.db_name, config.db_password)
+    db = DB(config.get('database.name'), config.get('database.password'))
     
     with db:
         # 查询
@@ -93,8 +93,8 @@ async def example_direct():
     # 使用 Telegram 客户端
     client = TGClient(
         session_name='my_session',
-        api_id=config.api_id,
-        api_hash=config.api_hash,
+        api_id=config.get('telegram.api_id'),
+        api_hash=config.get('telegram.api_hash'),
         proxy=config.proxy
     )
     

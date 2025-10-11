@@ -112,56 +112,6 @@ class Config:
         proxy_type_enum = proxy_type_map.get(proxy_type, socks.HTTP)
         return (proxy_type_enum, host, port)
     
-    @property
-    def db_name(self):
-        """获取数据库名称"""
-        return self.get('database.name', '')
-    
-    @property
-    def db_password(self):
-        """获取数据库密码"""
-        return self.get('database.password', '')
-    
-    @property
-    def db_host(self):
-        """获取数据库主机"""
-        return self.get('database.host', '127.0.0.1')
-    
-    @property
-    def db_port(self):
-        """获取数据库端口"""
-        return self.get('database.port', 3306)
-    
-    @property
-    def db_user(self):
-        """获取数据库用户"""
-        return self.get('database.user', 'root')
-    
-    @property
-    def api_id(self):
-        """获取 Telegram API ID"""
-        return self.get('telegram.api_id', 0)
-    
-    @property
-    def api_hash(self):
-        """获取 Telegram API Hash"""
-        return self.get('telegram.api_hash', '')
-    
-    @property
-    def bot_id(self):
-        """获取机器人 ID"""
-        return self.get('bot.id', 0)
-    
-    @property
-    def bot_username(self):
-        """获取机器人用户名"""
-        return self.get('bot.username', '')
-    
-    @property
-    def bot_token(self):
-        """获取机器人 Token"""
-        return self.get('bot.token', '')
-    
     def to_dict(self):
         """
         将配置转换为字典
