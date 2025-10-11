@@ -1,0 +1,11 @@
+# Telegram 客户端
+telethon>=1.28.0
+
+# 数据库
+PyMySQL>=1.0.0
+
+# 工具库
+pytz>=2023.3
+PyYAML>=6.0
+PySocks>=1.7.1
+

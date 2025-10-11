@@ -1,0 +1,29 @@
+# TT 库配置文件示例
+# 复制此文件为 config.yaml 并填入实际值
+
+# 代理设置
+proxy:
+  enabled: true          # 是否启用代理
+  type: http            # 代理类型：http, socks5, socks4
+  host: 127.0.0.1       # 代理主机
+  port: 7890            # 代理端口
+
+# 数据库设置
+database:
+  host: 127.0.0.1       # 数据库主机
+  port: 3306            # 数据库端口
+  user: root            # 数据库用户
+  name: mydb            # 数据库名称
+  password: "123456"    # 数据库密码
+
+# Telegram 设置
+telegram:
+  api_id: 12345678                              # Telegram API ID (从 https://my.telegram.org 获取)
+  api_hash: "your_api_hash_here"                # Telegram API Hash
+
+# Bot 设置（如果使用 Bot）
+bot:
+  id: 123456789                                 # Bot ID
+  username: "your_bot"                          # Bot 用户名 (不含 @)
+  token: "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ" # Bot Token (从 @BotFather 获取)
+
